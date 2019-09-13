@@ -32,10 +32,10 @@ jobs:
           name: run tests
           command: RAILS_ENV=test bundle exec rspec
 
-      # run rails_best_practices!
+      # run code_analysis!
       - run:
-          name: run rails best practices
-          command: RAILS_ENV=test bundle exec rake rails_best_practices
+          name: run rails code analysis
+          command: RAILS_ENV=test bundle exec rake code_analysis
 
       - store_test_results:
           path: /tmp/test-results
