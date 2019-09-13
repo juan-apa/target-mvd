@@ -23,6 +23,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 
 gem 'delayed_job_active_record', '~> 4.1.3'
+gem 'devise', '~> 4.7.0'
+gem 'devise_token_auth', '~> 1.1.2'
 gem 'draper', '~> 3.1'
 gem 'figaro', '~> 1.1.1'
 gem 'haml-rails', '~> 1.0.0'
