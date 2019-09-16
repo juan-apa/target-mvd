@@ -43,6 +43,4 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   include DeviseTokenAuth::Concerns::User
-
-
 end

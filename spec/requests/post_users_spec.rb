@@ -21,12 +21,12 @@ describe 'POST api/v1/users/', type: :request do
     let(:params) do
       {
         user: {
-            email: email,
-            password: password,
-            password_confirmation: password_confirmation,
-            first_name: first_name,
-            last_name: last_name,
-            gender: gender
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation,
+          first_name: first_name,
+          last_name: last_name,
+          gender: gender
         }
       }
     end
@@ -45,7 +45,7 @@ describe 'POST api/v1/users/', type: :request do
     it 'returns the user' do
       post user_registration_path, params: params, as: :json
 
-      json = JSON.parse(response.body, {symbolize_names: true})
+      json = JSON.parse(response.body, symbolize_names: true)
       expect(json[:status]).to eq('success')
       expect(json[:data][:id]).to eq(user.id)
       expect(json[:data][:email]).to eq(user.email)
