@@ -2,8 +2,11 @@ module Api
   module V1
     class UsersController < ApplicationController
       def show
-        user = User.find(params[:id])
-        render user.to_json
+        @user = User.find(params[:id])
+      end
+
+      def index
+        @users = User.all
       end
     end
   end

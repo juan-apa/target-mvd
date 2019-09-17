@@ -5,11 +5,6 @@ describe 'POST api/v1/users/', type: :request do
   let(:failed_response) { 422 }
 
   describe 'POST create' do
-    # user_registration_path = '/api/v1/users'
-
-    let(:user)            { User.last }
-    let(:failed_response) { 422 }
-
     let(:username)              { 'japaricio' }
     let(:email)                 { 'japaricio@p4e.com' }
     let(:password)              { 'password' }
@@ -45,7 +40,7 @@ describe 'POST api/v1/users/', type: :request do
     it 'returns the user' do
       post user_registration_path, params: params, as: :json
 
-      json = JSON.parse(response.body, symbolize_names: true)
+      json = parsed_response
       expect(json[:status]).to eq('success')
       expect(json[:data][:id]).to eq(user.id)
       expect(json[:data][:email]).to eq(user.email)

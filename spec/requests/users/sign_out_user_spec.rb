@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 describe 'DELETE /api/v1/users/sign_out', type: :request do
-  # Create and confirm a user in the database
-  let(:user) { create(:user) }
+  # Create a confirmed user in the database
+  let(:user) { create(:user, confirmed: true) }
   let(:headers) { nil }
   let(:dummy_token) { nil }
   let(:dummy_client) { nil }
 
   context 'with signed-in user' do
     before do
-      user.confirm
-      user.reload
       headers = user.create_new_auth_token
 
       delete '/api/v1/users/sign_out', headers: {
@@ -33,8 +31,6 @@ describe 'DELETE /api/v1/users/sign_out', type: :request do
 
   context 'with signed-out user' do
     before do
-      user.confirm
-      user.reload
       dummy_token = 'dummy_token'
       dummy_client = 'dummy_client'
 
@@ -50,7 +46,7 @@ describe 'DELETE /api/v1/users/sign_out', type: :request do
     end
 
     it 'returns errors upon failure' do
-      json = JSON.parse(response.body)
+      json = parsed_response
       expect(json['errors']).to eq(['User was not found or was not logged in.'])
     end
   end

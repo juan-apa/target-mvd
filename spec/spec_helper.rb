@@ -3,7 +3,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 
 require 'factory_bot_rails'
-# require 'helpers'
+require 'helpers'
 require 'webmock/rspec'
 require 'shoulda/matchers'
 
@@ -13,7 +13,7 @@ FactoryBot.reload
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
 
 RSpec.configure do |config|
-  # config.include Helpers
+  config.include Helpers
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
