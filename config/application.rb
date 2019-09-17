@@ -34,5 +34,7 @@ module TargetMvd
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.action_mailer.default_url_options = { host: ENV['MAILER_SERVER_URL'] }
+
+    config.middleware.use ActionDispatch::Flash
   end
 end

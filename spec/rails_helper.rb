@@ -6,6 +6,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/core'
 require 'spec_helper'
 require 'rspec/rails'
+require 'devise'
 require 'simplecov'
 
 SimpleCov.start
@@ -14,7 +15,8 @@ ActiveRecord::Migration.maintain_test_schema!
 WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
-  # config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 end
