@@ -1,15 +1,9 @@
 require 'rails_helper'
 
 describe 'POST api/v1/users/', type: :request do
-  let(:user)            { User.last }
-  let(:failed_response) { 422 }
+  let(:user) { User.last }
 
   describe 'POST create' do
-    # user_registration_path = '/api/v1/users'
-
-    let(:user)            { User.last }
-    let(:failed_response) { 422 }
-
     let(:username)              { 'japaricio' }
     let(:email)                 { 'japaricio@p4e.com' }
     let(:password)              { 'password' }
@@ -33,7 +27,7 @@ describe 'POST api/v1/users/', type: :request do
 
     it 'returns a successful response' do
       post user_registration_path, params: params, as: :json
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'creates the user in the database' do
@@ -45,15 +39,17 @@ describe 'POST api/v1/users/', type: :request do
     it 'returns the user' do
       post user_registration_path, params: params, as: :json
 
-      json = JSON.parse(response.body, symbolize_names: true)
+      json = parsed_response
       expect(json[:status]).to eq('success')
-      expect(json[:data][:id]).to eq(user.id)
-      expect(json[:data][:email]).to eq(user.email)
-      expect(json[:data][:uid]).to eq(email)
-      expect(json[:data][:provider]).to eq('email')
-      expect(json[:data][:first_name]).to eq(user.first_name)
-      expect(json[:data][:last_name]).to eq(user.last_name)
-      expect(json[:data][:gender]).to eq(user.gender)
+      expect(json[:data]).to include_json(
+        id: user.id,
+        email: user.email,
+        uid: email,
+        provider: 'email',
+        first_name: user.first_name,
+        last_name: user.last_name,
+        gender: user.gender
+      )
     end
 
     context 'when the email is not correct' do
@@ -68,7 +64,7 @@ describe 'POST api/v1/users/', type: :request do
       it 'does not return a successful response' do
         post user_registration_path, params: params, as: :json
 
-        expect(response.status).to eq(failed_response)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
@@ -86,7 +82,7 @@ describe 'POST api/v1/users/', type: :request do
       it 'does not return a successful response' do
         post user_registration_path, params: params, as: :json
 
-        expect(response.status).to eq(failed_response)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
@@ -104,7 +100,7 @@ describe 'POST api/v1/users/', type: :request do
       it 'does not return a successful response' do
         post user_registration_path, params: params, as: :json
 
-        expect(response.status).to eq(failed_response)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
@@ -120,7 +116,7 @@ describe 'POST api/v1/users/', type: :request do
       it 'does not return a successful response' do
         post user_registration_path, params: params, as: :json
 
-        expect(response.status).to eq(failed_response)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
