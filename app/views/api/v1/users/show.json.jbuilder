@@ -1,3 +1,1 @@
-json.user do
-  json.partial! 'info', user: @user
-end
+json.user @user, partial: 'info', as: :user

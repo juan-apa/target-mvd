@@ -2,16 +2,16 @@ require 'rails_helper'
 
 describe 'DELETE /api/v1/users/sign_out', type: :request do
   # Create a confirmed user in the database
-  let(:user) { create(:user, confirmed: true) }
+  subject { create(:user, confirmed: true) }
   let(:headers) { nil }
-  let(:dummy_token) { nil }
-  let(:dummy_client) { nil }
+  let(:dummy_token) { 'dummy_token' }
+  let(:dummy_client) { 'dummy_client' }
 
   context 'with signed-in user' do
     before do
-      headers = user.create_new_auth_token
+      headers = subject.create_new_auth_token
 
-      delete '/api/v1/users/sign_out', headers: {
+      delete destroy_user_session_path, headers: {
         'access-token': headers['access-token'],
         'client': headers['client'],
         'uid': headers['uid']
@@ -19,35 +19,32 @@ describe 'DELETE /api/v1/users/sign_out', type: :request do
     end
 
     it 'returns success' do
-      expect(response).to be_successful
+      expect(response).to have_http_status(:success)
     end
 
     it 'is signed out' do
       token = :headers['access-token']
       client = :headers['client']
-      expect(user.reload.valid_token?(token, client)).to be_falsey
+      expect(subject.reload.valid_token?(token, client)).to be_falsey
     end
   end
 
   context 'with signed-out user' do
     before do
-      dummy_token = 'dummy_token'
-      dummy_client = 'dummy_client'
-
-      delete '/api/v1/users/sign_out', headers: {
+      delete destroy_user_session_path, headers: {
         'access-token': dummy_token,
         'client': dummy_client,
-        'uid': user.uid
+        'uid': subject.uid
       }
     end
 
     it 'returns not found' do
-      expect(response.status).to eq(404)
+      expect(response).to have_http_status(:not_found)
     end
 
     it 'returns errors upon failure' do
       json = parsed_response
-      expect(json['errors']).to eq(['User was not found or was not logged in.'])
+      expect(json['errors']).to include_json(['User was not found or was not logged in.'])
     end
   end
 end

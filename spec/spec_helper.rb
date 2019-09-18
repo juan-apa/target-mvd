@@ -6,6 +6,7 @@ require 'factory_bot_rails'
 require 'helpers'
 require 'webmock/rspec'
 require 'shoulda/matchers'
+require 'rspec/json_expectations'
 
 FactoryBot.factories.clear
 FactoryBot.reload

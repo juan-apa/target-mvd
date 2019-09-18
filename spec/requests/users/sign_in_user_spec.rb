@@ -13,7 +13,7 @@ describe 'POST /api/v1/users/sign_in', type: :request do
         email: unconfirmed_user.email,
         password: unconfirmed_user.password
       }
-      post '/api/v1/users/sign_in', params: params, as: :json
+      post user_session_path, params: params, as: :json
     end
 
     it 'returns unauthorized' do
@@ -26,8 +26,8 @@ describe 'POST /api/v1/users/sign_in', type: :request do
         success: false,
         errors: ['A confirmation email was sent to your account at \'' + unconfirmed_user.email +
           '\'. You must follow the instructions in the email before your account can be activated']
-      }.with_indifferent_access
-      expect(json).to eq(expected_response)
+      }
+      expect(json).to include_json(expected_response)
     end
   end
 
@@ -38,23 +38,24 @@ describe 'POST /api/v1/users/sign_in', type: :request do
           email: user.email,
           password: user.password
         }
-        post '/api/v1/users/sign_in', params: params, as: :json
+        post user_session_path, params: params, as: :json
       end
 
       it 'returns success' do
-        expect(response).to be_successful
+        expect(response).to have_http_status(:success)
       end
 
       it 'returns the user' do
         json = parsed_response
-
-        expect(json[:data][:id]).to eq(user.id)
-        expect(json[:data][:email]).to eq(user.email)
-        expect(json[:data][:uid]).to eq(user.email)
-        expect(json[:data][:provider]).to eq('email')
-        expect(json[:data][:first_name]).to eq(user.first_name)
-        expect(json[:data][:last_name]).to eq(user.last_name)
-        expect(json[:data][:gender]).to eq(user.gender)
+        expect(json[:data]).to include_json({
+          id: user.id,
+          email: user.email,
+          uid: user.email,
+          provider: 'email',
+          first_name: user.first_name,
+          last_name: user.last_name,
+          gender: user.gender
+        })
       end
 
       it 'returns a valid client and access token' do
@@ -70,11 +71,11 @@ describe 'POST /api/v1/users/sign_in', type: :request do
           email: user.email,
           password: user.password + 'wrong_password'
         }
-        post '/api/v1/users/sign_in', params: params, as: :json
+        post user_session_path, params: params, as: :json
       end
 
       it 'returns unauthorized' do
-        expect(response).to be_unauthorized
+        expect(response).to have_http_status(:unauthorized)
       end
 
       it 'return errors upon failure' do
@@ -82,8 +83,8 @@ describe 'POST /api/v1/users/sign_in', type: :request do
         expected_response = {
           success: false,
           errors: ['Invalid login credentials. Please try again.']
-        }.with_indifferent_access
-        expect(json).to eq(expected_response)
+        }
+        expect(json).to include_json(expected_response)
       end
     end
   end
