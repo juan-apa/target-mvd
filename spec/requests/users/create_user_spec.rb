@@ -41,7 +41,7 @@ describe 'POST api/v1/users/', type: :request do
 
       json = parsed_response
       expect(json[:status]).to eq('success')
-      expect(json[:data]).to include_json({
+      expect(json[:data]).to include_json(
         id: user.id,
         email: user.email,
         uid: email,
@@ -49,7 +49,7 @@ describe 'POST api/v1/users/', type: :request do
         first_name: user.first_name,
         last_name: user.last_name,
         gender: user.gender
-      })
+      )
     end
 
     context 'when the email is not correct' do
