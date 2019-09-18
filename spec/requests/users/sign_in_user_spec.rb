@@ -21,7 +21,7 @@ describe 'POST /api/v1/users/sign_in', type: :request do
     end
 
     it 'returns invalid email message' do
-      json = JSON.parse(response.body)
+      json = parsed_response
       expected_response = {
         success: false,
         errors: ['A confirmation email was sent to your account at \'' + unconfirmed_user.email +
