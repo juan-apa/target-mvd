@@ -34,6 +34,7 @@ FactoryBot.define do
   factory :user do
     transient do
       confirmed { false }
+      signed_in { false }
     end
     email       { Faker::Internet.unique.email }
     first_name  { Faker::Name.first_name }
@@ -43,6 +44,10 @@ FactoryBot.define do
 
     after(:create) do |user, evaluator|
       user.confirm if evaluator.confirmed
+      if evaluator.signed_in
+        user.confirm
+        sign_in(user)
+      end
     end
   end
 end

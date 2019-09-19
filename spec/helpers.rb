@@ -10,4 +10,8 @@ module Helpers
     sign_in user
     request.headers.merge!(user.create_new_auth_token)
   end
+
+  def auth_headers(user)
+    user.create_new_auth_token
+  end
 end
