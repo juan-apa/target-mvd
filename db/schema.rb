@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_09_17_145424) do
     t.string "title", limit: 40, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["title"], name: "index_topics_on_title", unique: true
   end
 
   create_table "users", force: :cascade do |t|
