@@ -7,6 +7,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_topics_on_title  (title) UNIQUE
+#
 
 class Topic < ApplicationRecord
   validates :title, presence: true, length: { minimum: 3, maximum: 40 }, uniqueness: true

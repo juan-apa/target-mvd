@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'GET /api/v1/topics/:id', type: :request do
   let(:topic) { create :topic }
   let(:user) { create :user }
-  let(:invalid_topic_id) { topic.id + 1 }
+  let(:invalid_topic_id) { 'invalid_topic_id' }
   let(:headers) { auth_headers(user) }
 
   context 'with signed-out user' do
@@ -11,11 +11,11 @@ describe 'GET /api/v1/topics/:id', type: :request do
       get api_v1_topic_path(topic.id), headers: {}, as: :json
     end
 
-    it 'should return unauthorized' do
+    it 'returns unauthorized' do
       expect(response).to have_http_status(:unauthorized)
     end
 
-    it 'should return error message' do
+    it 'returns error message' do
       json = parsed_response
       expect(json).to include_json(errors: ['You need to sign in or sign up before continuing.'])
     end
@@ -27,11 +27,11 @@ describe 'GET /api/v1/topics/:id', type: :request do
         get(api_v1_topic_path(topic.id), headers: headers, as: :json)
       end
 
-      it 'should return success status' do
+      it 'returns success status' do
         expect(response).to have_http_status(:success)
       end
 
-      it 'should return the topic' do
+      it 'returns the topic' do
         json = parsed_response
         expected_json = {
           topic: {
@@ -48,11 +48,11 @@ describe 'GET /api/v1/topics/:id', type: :request do
         get api_v1_topic_path(invalid_topic_id), headers: headers, as: :json
       end
 
-      it 'should return not found status' do
+      it 'returns not found status' do
         expect(response).to have_http_status(:not_found)
       end
 
-      it 'should return not found error' do
+      it 'returns not found error' do
         json = parsed_response
         expect(json).to include_json(error: 'Couldn\'t find the record')
       end

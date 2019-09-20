@@ -1,1 +1,1 @@
-json.topics @topics, partial: 'info', as: 'topic'
+json.topics @topics, partial: 'info', as: :topic

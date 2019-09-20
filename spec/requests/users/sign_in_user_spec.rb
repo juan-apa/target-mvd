@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe 'POST /api/v1/users/sign_in', type: :request do
   # Create a confirmed user in the database
-  let(:user) { create(:user, confirmed: true) }
+  let(:user) { create(:user) }
 
   # Create a non confirmed user in the database
-  let(:unconfirmed_user) { create(:user) }
+  let(:unconfirmed_user) { create(:user, unconfirmed: true) }
 
   context 'with unconfirmed email' do
     before do
