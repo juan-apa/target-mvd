@@ -15,5 +15,6 @@
 FactoryBot.define do
   factory :topic do
     title { Faker::Lorem.unique.characters(number: 10) }
+    image { Rack::Test::UploadedFile.new('spec/fixtures/test_image.png', 'image/png') }
   end
 end

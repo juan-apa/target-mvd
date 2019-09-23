@@ -32,7 +32,9 @@ describe 'GET /api/v1/topics', type: :request do
 
     it 'returns the topics array' do
       json = parsed_response
-      topics_arr = topics.map { |topic| { id: topic.id, title: topic.title } }
+      topics_arr = topics.map do |topic|
+        { id: topic.id, title: topic.title, image: url_for(topic.image) }
+      end
       expected_response = { topics: topics_arr }
       expect(json).to include_json(expected_response)
     end
