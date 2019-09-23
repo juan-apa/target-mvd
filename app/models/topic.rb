@@ -14,4 +14,5 @@
 
 class Topic < ApplicationRecord
   validates :title, presence: true, length: { minimum: 3, maximum: 40 }, uniqueness: true
+  has_one_attached :image
 end
