@@ -42,5 +42,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  has_many :targets, dependent: :restrict_with_exception
+
   include DeviseTokenAuth::Concerns::User
 end
