@@ -78,6 +78,8 @@ Rails:
 
 Rails/Delegate:
   Enabled: true
+  Exclude:
+    - app/controllers/api/concerns/act_as_api_request.rb
 
 Rails/FilePath:
   Enabled: false
@@ -99,3 +101,4 @@ Style/ModuleFunction:
 
 Style/ReturnNil:
   Enabled: true
+

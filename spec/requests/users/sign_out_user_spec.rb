@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'DELETE /api/v1/users/sign_out', type: :request do
   # Create a confirmed user in the database
-  subject { create(:user, confirmed: true) }
+  subject { create(:user) }
   let(:headers) { nil }
   let(:dummy_token) { 'dummy_token' }
   let(:dummy_client) { 'dummy_client' }
@@ -10,7 +10,6 @@ describe 'DELETE /api/v1/users/sign_out', type: :request do
   context 'with signed-in user' do
     before do
       headers = subject.create_new_auth_token
-
       delete destroy_user_session_path, headers: {
         'access-token': headers['access-token'],
         'client': headers['client'],

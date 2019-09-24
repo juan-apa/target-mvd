@@ -33,4 +33,6 @@ RSpec.configure do |config|
   config.before :each do
     ActionMailer::Base.deliveries.clear
   end
+
+  config.include Rack::Test::Methods
 end
