@@ -16,10 +16,6 @@ module Api
       def topic
         @topic ||= Topic.find(params[:id])
       end
-
-      def topic_params
-        params.require(:topic).permit(:title, :image)
-      end
     end
   end
 end

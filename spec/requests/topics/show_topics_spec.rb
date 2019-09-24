@@ -36,7 +36,8 @@ describe 'GET /api/v1/topics/:id', type: :request do
         expected_json = {
           topic: {
             id: topic.id,
-            title: topic.title
+            title: topic.title,
+            image: url_for(topic.image)
           }
         }
         expect(json).to include_json(expected_json)
