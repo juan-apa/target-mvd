@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     namespace 'v1' do
       resources :users, only: %i[index show], format: 'json'
       resources :topics, only: %i[index show], format: 'json'
-      resources :targets, only: %i[index show], format: 'json'
+      resources :targets, only: %i[index show]
       get :status, to: 'api#status'
     end
   end
