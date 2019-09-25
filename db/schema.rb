@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 2019_09_23_141446) do
   end
 
   create_table "targets", force: :cascade do |t|
-    t.string "title"
-    t.integer "radius"
-    t.decimal "latitude", precision: 10, scale: 6
-    t.decimal "longitude", precision: 10, scale: 6
+    t.string "title", limit: 40, null: false
+    t.integer "radius", limit: 2, null: false
+    t.decimal "latitude", precision: 10, scale: 6, null: false
+    t.decimal "longitude", precision: 10, scale: 6, null: false
     t.bigint "user_id"
     t.bigint "topic_id"
     t.datetime "created_at", precision: 6, null: false

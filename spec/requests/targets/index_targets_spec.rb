@@ -1,11 +1,8 @@
 require 'rails_helper'
 
 describe 'GET /api/v1/targets', type: :request do
-  let!(:user)   { create :user }
-  let!(:topic)  { create :topic }
-
-  let!(:targets) { create_list(:target, 3, user: user) }
-
+  let!(:user) { create :user }
+  let!(:targets) { create_list :target, 3, user: user }
   let(:headers) { auth_headers(user) }
 
   context 'with loged-out user' do
