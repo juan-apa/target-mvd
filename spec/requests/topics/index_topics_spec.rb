@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'GET /api/v1/topics', type: :request do
-  let!(:topics) { create_list(:topic, 20) }
+  let!(:topics) { create_list(:topic, 3) }
   let(:user) { create :user }
   let(:invalid_topic_id) { topic.id + 1 }
   let(:headers) { auth_headers(user) }
