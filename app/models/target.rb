@@ -28,5 +28,5 @@ class Target < ApplicationRecord
 
   validates :title, presence: true, length: { minimum: 3, maximum: 40 }
   validates :radius, presence: true, numericality: { less_than_or_equal_to: 999,
-                                                      greater_than_or_equal_to: 1 }
+                                                     greater_than_or_equal_to: 1 }
 end
