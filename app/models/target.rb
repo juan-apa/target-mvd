@@ -20,6 +20,7 @@
 #
 
 class Target < ApplicationRecord
+  MAX_NUMBER_OF_TARGETS = 10
   acts_as_mappable lat_column_name: :latitude,
                    lng_column_name: :longitude
 
@@ -29,4 +30,13 @@ class Target < ApplicationRecord
   validates :title, presence: true, length: { minimum: 3, maximum: 40 }
   validates :radius, presence: true, numericality: { less_than_or_equal_to: 999,
                                                      greater_than_or_equal_to: 1 }
+  validate :validate_target_limit, on: :create
+
+  private
+
+  def validate_target_limit
+    if user.targets.size >= MAX_NUMBER_OF_TARGETS
+      errors.add(:target, I18n.t('validation.errors.targets_limit_reached'))
+    end
+  end
 end

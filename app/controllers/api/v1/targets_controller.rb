@@ -6,7 +6,7 @@ module Api
       end
 
       def create
-        @target = current_user.targets.create! targets_params
+        @target = current_user.targets.create!(targets_params)
       end
 
       def show
