@@ -29,10 +29,8 @@ FactoryBot.define do
     topic
 
     factory :target_with_invalid_topic do
-      topic  { nil }
-      topic_id { 'invalid_topic_id' }
+      topic { nil }
+      topic_id { 'invalid_target_id' }
     end
   end
-
-
 end

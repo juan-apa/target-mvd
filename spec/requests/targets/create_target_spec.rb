@@ -4,10 +4,10 @@ describe 'POST api/v1/users/', type: :request do
   let!(:user)    { create :user }
   let!(:topic)   { create :topic }
   let!(:target)  { build :target, user: user, topic: topic }
-  let!(:target_with_invalid_topic)  { build :target_with_invalid_topic, user: user }
+  let!(:target_with_invalid_topic) { build :target_with_invalid_topic, user: user }
   let!(:headers) { auth_headers(user) }
 
-  context 'with signed-out user' do
+  context 'with logged-out user' do
     before do
       post api_v1_targets_path, params: user, headers: {}, as: :json
     end
@@ -19,13 +19,13 @@ describe 'POST api/v1/users/', type: :request do
     it 'returns an error message' do
       json = parsed_response
       expected_response = {
-          errors: ['You need to sign in or sign up before continuing.']
+        errors: ['You need to sign in or sign up before continuing.']
       }
       expect(json).to include_json(expected_response)
     end
   end
 
-  context 'with signed-in user' do
+  context 'with logged-in user' do
     context 'with correct params' do
       it 'changes the amount of targets by one' do
         expect {
@@ -68,7 +68,7 @@ describe 'POST api/v1/users/', type: :request do
         json = parsed_response
         expected_response = {
           errors: {
-            topic: [ 'must exist' ]
+            topic: ['must exist']
           }
         }
         expect(json).to include_json(expected_response)
