@@ -9,6 +9,10 @@ module Api
         target
       end
 
+      def destroy
+        current_user.targets.destroy(params[:id])
+      end
+
       private
 
       def target
