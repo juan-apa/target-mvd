@@ -5,7 +5,7 @@ describe 'GET /api/v1/targets', type: :request do
   let!(:targets) { create_list :target, 3, user: user }
   let(:headers) { auth_headers(user) }
 
-  context 'with loged-out user' do
+  context 'with logged-out user' do
     before do
       get api_v1_targets_path, headers: {}, as: :json
     end
@@ -20,7 +20,7 @@ describe 'GET /api/v1/targets', type: :request do
     end
   end
 
-  context 'with loged-in user' do
+  context 'with logged-in user' do
     before do
       get api_v1_targets_path, headers: headers, as: :json
     end
