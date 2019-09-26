@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'DELETE api/v1/targets/', type: :request do
   let!(:user)    { create :user }
-  let!(:target)  { create :target, user: user}
+  let!(:target)  { create :target, user: user }
   let!(:headers) { auth_headers(user) }
   let(:invalid_target_id) { 'invalid_target_id' }
 
@@ -18,7 +18,7 @@ describe 'DELETE api/v1/targets/', type: :request do
     it 'returns an error message' do
       json = parsed_response
       expected_response = {
-          errors: ['You need to sign in or sign up before continuing.']
+        errors: ['You need to sign in or sign up before continuing.']
       }
       expect(json).to include_json(expected_response)
     end
@@ -61,4 +61,3 @@ describe 'DELETE api/v1/targets/', type: :request do
     end
   end
 end
-
