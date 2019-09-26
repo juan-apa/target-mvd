@@ -26,7 +26,7 @@ class Target < ApplicationRecord
   belongs_to :topic
   belongs_to :user
 
-  validates :title, presence: false, length: { minimum: 3, maximum: 40 }
-  validates :radius, presence: false, numericality: { less_than_or_equal_to: 999,
+  validates :title, presence: true, length: { minimum: 3, maximum: 40 }
+  validates :radius, presence: true, numericality: { less_than_or_equal_to: 999,
                                                       greater_than_or_equal_to: 1 }
 end
