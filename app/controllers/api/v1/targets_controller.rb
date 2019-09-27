@@ -21,7 +21,6 @@ module Api
 
       def target_params
         params.require(:target).permit(:title, :latitude, :longitude, :topic_id, :radius)
-              .merge(user_id: current_user.id)
       end
     end
   end
