@@ -6,7 +6,7 @@ module Api
       end
 
       def create
-        @target = current_user.targets.create!(targets_params)
+        @target = current_user.targets.create!(target_params)
       end
 
       def show
@@ -19,7 +19,7 @@ module Api
         @target ||= current_user.targets.find(params[:id])
       end
 
-      def targets_params
+      def target_params
         params.require(:target).permit(:title, :latitude, :longitude, :topic_id, :radius)
               .merge(user_id: current_user.id)
       end
