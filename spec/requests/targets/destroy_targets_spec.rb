@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'DELETE api/v1/targets/', type: :request do
+describe 'DELETE api/v1/targets/:id', type: :request do
   let!(:user)    { create :user }
   let!(:target)  { create :target, user: user }
   let!(:headers) { auth_headers(user) }
@@ -42,7 +42,7 @@ describe 'DELETE api/v1/targets/', type: :request do
       it 'doesn\'t change the amount of targets' do
         expect {
           delete api_v1_target_path(invalid_target_id), headers: headers, as: :json
-        }.to change(Target, :count).by(0)
+        }.not_to change(Target, :count)
       end
 
       it 'returns not found status' do
