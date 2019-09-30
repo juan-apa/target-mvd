@@ -9,6 +9,10 @@ module Api
         target
       end
 
+      def destroy
+        target.destroy!
+      end
+
       private
 
       def target
