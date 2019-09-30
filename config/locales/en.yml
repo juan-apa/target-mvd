@@ -26,3 +26,6 @@ en:
       not_found: "Couldn't find the record"
       missing_param: 'A required param is missing'
       invalid_content_type: 'Invalid content type header'
+  validation:
+    errors:
+      targets_limit_reached: 'you have reached the maximum number of targets'
