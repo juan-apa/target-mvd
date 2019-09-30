@@ -20,7 +20,7 @@
 #
 
 class Target < ApplicationRecord
-  MAX_NUMBER_OF_TARGETS = 10
+  MAX_NUMBER_OF_TARGETS = ENV.fetch('MAX_NUMBER_OF_TARGETS').to_i
 
   acts_as_mappable lat_column_name: :latitude,
                    lng_column_name: :longitude

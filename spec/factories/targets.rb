@@ -27,10 +27,5 @@ FactoryBot.define do
     longitude { Faker::Address.longitude }
     user
     topic
-
-    factory :target_with_invalid_topic do
-      topic { nil }
-      topic_id { 'invalid_target_id' }
-    end
   end
 end

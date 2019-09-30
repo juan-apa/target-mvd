@@ -27,10 +27,9 @@ describe Target do
 
     it 'returns an error message' do
       user.reload
-      expected_error_message = 'Validation failed: Target you have reached '\
-        'the maximum number of targets'
       expect { new_target.save! }.to raise_error(ActiveRecord::RecordInvalid)
-        .with_message(expected_error_message)
+        .with_message('Validation failed: Target ' +
+          I18n.t('validation.errors.targets_limit_reached'))
     end
   end
 end

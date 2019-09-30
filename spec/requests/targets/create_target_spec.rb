@@ -4,7 +4,7 @@ describe 'POST api/v1/users/', type: :request do
   let!(:user)    { create :user }
   let!(:topic)   { create :topic }
   let!(:target)  { build :target, user: user, topic: topic }
-  let!(:target_with_invalid_topic) { build :target_with_invalid_topic, user: user }
+  let!(:target_with_invalid_topic) { build :target, user: user, topic: nil, topic_id: 'invalid' }
   let!(:headers) { auth_headers(user) }
 
   context 'with logged-out user' do
