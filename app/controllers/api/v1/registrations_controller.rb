@@ -10,6 +10,10 @@ module Api
         params.require(:user).permit(:first_name, :last_name, :email, :gender, :password,
                                      :password_confirmation)
       end
+
+      def account_update_params
+        params.require(:user).permit(:first_name, :last_name, :gender)
+      end
     end
   end
 end
