@@ -36,8 +36,8 @@ FactoryBot.define do
       unconfirmed { false }
     end
     email       { Faker::Internet.unique.email }
-    first_name  { Faker::Lorem.unique.characters(number: 6) }
-    last_name   { Faker::Lorem.unique.characters(number: 6) }
+    first_name  { Faker::Lorem.characters(number: 6) }
+    last_name   { Faker::Lorem.characters(number: 6) }
     gender      { User.genders.keys.sample }
     password    { Faker::Internet.password }
 
