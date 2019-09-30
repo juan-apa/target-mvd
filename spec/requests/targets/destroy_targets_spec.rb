@@ -5,6 +5,7 @@ describe 'DELETE api/v1/targets/:id', type: :request do
   let!(:target)  { create :target, user: user }
   let!(:headers) { auth_headers(user) }
   let(:invalid_target_id) { 'invalid_target_id' }
+  subject { delete api_v1_target_path(target.id), headers: headers, as: :json }
 
   context 'with signed-out user' do
     before do
@@ -27,9 +28,7 @@ describe 'DELETE api/v1/targets/:id', type: :request do
   context 'with signed-in user' do
     context 'with valid target id' do
       it 'changes the amount of targets by one' do
-        expect {
-          delete api_v1_target_path(target.id), headers: headers, as: :json
-        }.to change(Target, :count).by(-1)
+        expect { subject }.to change(Target, :count).by(-1)
       end
 
       it 'returns a success code' do
