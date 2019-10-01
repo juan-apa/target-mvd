@@ -30,11 +30,12 @@ describe 'PATCH /api/v1/users/', type: :request do
 
     context 'with correct params' do
       context 'with valid values' do
+        let!(:new_user_attr) { build :user }
         let!(:user_param) do
           {
-            first_name: user.first_name,
-            last_name: user.last_name,
-            gender: user.gender
+            first_name: new_user_attr.first_name,
+            last_name: new_user_attr.last_name,
+            gender: new_user_attr.gender
           }
         end
 
@@ -47,6 +48,15 @@ describe 'PATCH /api/v1/users/', type: :request do
           update_registration
           res = parsed_response
           expect(res).to include_json(data: user_param)
+        end
+
+        it 'changes the values' do
+          expect {
+            update_registration
+            user.reload
+          }.to change { [user.first_name, user.last_name, user.gender] }
+            .from([user.first_name, user.last_name, user.gender])
+            .to([new_user_attr.first_name, new_user_attr.last_name, new_user_attr.gender])
         end
       end
 
@@ -76,6 +86,13 @@ describe 'PATCH /api/v1/users/', type: :request do
           }
           expect(res).to include_json(expected_response)
         end
+
+        it 'doesn\'t change the values' do
+          expect {
+            update_registration
+            user.reload
+          }.not_to change { [user.first_name, user.last_name, user.gender] }
+        end
       end
     end
 
@@ -98,6 +115,13 @@ describe 'PATCH /api/v1/users/', type: :request do
           error: 'Please submit proper account update data in request body.'
         }
         expect(json).to include_json(expected_response)
+      end
+
+      it 'doesn\'t change the values' do
+        expect {
+          update_registration
+          user.reload
+        }.not_to change { [user.first_name, user.last_name, user.gender, user.email] }
       end
     end
   end
