@@ -1,10 +1,10 @@
 module NotificationService
   extend self
 
-  def create_notification(notification_token, notification)
-    puts 'notification created for notification_token: ' + notification_token + ' notification: ' +
-    notification.to_s
-
+  def create_notification(device_token, notification)
+    msg = 'notification created for notification_token: ' + device_token + 'notification: ' +
+          notification.to_s
+    Rails.logger.info(msg)
     # The notification sending code is commented out because now, there is no app
     # that generates device-tokens. Now it only prints the dummy notification token.
 

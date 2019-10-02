@@ -28,6 +28,8 @@ class Target < ApplicationRecord
   belongs_to :topic
   belongs_to :user
 
+  delegate :notification_token, to: :user, prefix: true
+
   validates :title, presence: true, length: { minimum: 3, maximum: 40 }
   validates :radius, presence: true, numericality: { less_than_or_equal_to: 999,
                                                      greater_than_or_equal_to: 1 }
@@ -50,14 +52,14 @@ class Target < ApplicationRecord
     }
 
     matching_targets.each do |target|
-      NotificationService.create_notification(target.user.notification_token, notification)
-      NotificationService.create_notification(self.user.notification_token, notification)
+      NotificationService.create_notification(target.user_notification_token, notification)
+      NotificationService.create_notification(user_notification_token, notification)
     end
   end
 
   def matching_targets
-    Target.within(self.radius, units: :meters, origin: [self.latitude, self.longitude])
-            .where(topic_id: self.topic.id)
-            .where.not(user_id: self.user.id)
+    Target.within(radius, units: :meters, origin: [latitude, longitude])
+          .where(topic_id: topic.id)
+          .where.not(user_id: user.id)
   end
 end
