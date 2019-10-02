@@ -27,7 +27,7 @@ describe 'POST api/v1/users/passwords/', type: :request do
       expect(response).to have_http_status(:not_found)
     end
 
-    it 'doesent send an email' do
+    it 'doesn\'t send an email' do
       expect {
         reset_password
       }.not_to change { ActionMailer::Base.deliveries.count }
