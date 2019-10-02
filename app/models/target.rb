@@ -33,11 +33,31 @@ class Target < ApplicationRecord
                                                      greater_than_or_equal_to: 1 }
   validate :validate_target_limit, on: :create
 
+  after_create :create_matches
+
   private
 
   def validate_target_limit
     return unless user.targets.size >= MAX_NUMBER_OF_TARGETS
 
     errors.add(:target, I18n.t('validation.errors.targets_limit_reached'))
+  end
+
+  def create_matches
+    notification = {
+      title: I18n.t('messages.notifications.new_match_title'),
+      body: I18n.t('messages.notifications.new_match_body')
+    }
+
+    matching_targets.each do |target|
+      NotificationService.create_notification(target.user.notification_token, notification)
+      NotificationService.create_notification(self.user.notification_token, notification)
+    end
+  end
+
+  def matching_targets
+    Target.within(self.radius, units: :meters, origin: [self.latitude, self.longitude])
+            .where(topic_id: self.topic.id)
+            .where.not(user_id: self.user.id)
   end
 end
