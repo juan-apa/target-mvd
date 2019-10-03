@@ -47,8 +47,8 @@ class Target < ApplicationRecord
 
   def create_matches
     notification = {
-      title: I18n.t('messages.notifications.new_match_title'),
-      body: I18n.t('messages.notifications.new_match_body')
+      title: I18n.t('messages.notification.target.new.title'),
+      body: I18n.t('messages.notification.target.new.body')
     }
 
     matching_targets.each do |target|
