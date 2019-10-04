@@ -44,6 +44,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :targets, dependent: :destroy
+  has_many :messages
 
   include DeviseTokenAuth::Concerns::User
 end
