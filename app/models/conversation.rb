@@ -6,6 +6,6 @@
 #
 
 class Conversation < ApplicationRecord
-  has_many :matches, dependent: nil
+  has_many :matches, dependent: :delete_all
   has_many :messages, dependent: :destroy
 end

@@ -57,7 +57,7 @@ class Target < ApplicationRecord
       NotificationService.create_notification(target.user_notification_token, notification)
       NotificationService.create_notification(user_notification_token, notification)
       # Create the match
-      Match.create({target_creator: self, target_compatible: target})
+      Match.create!(target_creator: self, target_compatible: target)
     end
   end
 

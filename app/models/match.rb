@@ -17,20 +17,36 @@
 #
 
 class Match < ApplicationRecord
-  belongs_to :target_creator, :class_name => 'Target'
-  belongs_to :target_compatible, :class_name => 'Target'
+  belongs_to :target_creator, class_name: 'Target'
+  belongs_to :target_compatible, class_name: 'Target'
   belongs_to :conversation
 
   before_validation :create_conversation
   after_destroy :destroy_conversation
 
-  private
+  scope :matches_with_targets, -> { joins(:target_creator, :target_compatible) }
+  scope :compatible_and_same_creator,
+        lambda {
+          matches_with_targets
+            .where(target_compatible: target_compatible,
+                   targets: { user_id: target_creator.user.id })
+        }
+  scope :creator_same_as_compatible,
+        lambda { |target_creator, target_compatible|
+          matches_with_targets
+            .where(target_creator: target_compatible,
+                   targets: { user_id: target_compatible.user.id })
+            .or(
+              Match.matches_with_targets.where(target_compatible: target_compatible,
+                                               targets: { user_id: target_creator.user.id })
+            )
+        }
 
   def create_conversation
-    matches = Match.joins(:target_creator, :target_compatible).where(target_compatible: target_compatible, targets: {user_id: target_creator.user.id})
-          .or(Match.joins(:target_creator, :target_compatible).where(target_creator: target_compatible, targets: {user_id: target_compatible.user.id}))
-
-    self.conversation = matches.empty? ? Conversation.create! : matches[0].conversation
+    conversations = Match
+                    .distinct.creator_same_as_compatible(target_creator, target_compatible)
+                    .pluck(:conversation_id)
+    self.conversation_id = conversations.empty? ? Conversation.create!.id : conversations[0]
   end
 
   def destroy_conversation
