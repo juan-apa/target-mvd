@@ -36,6 +36,6 @@ UseModelAssociationCheck: { }
 #UseParenthesesInMethodDefCheck: { }
 UseObserverCheck: { }
 UseQueryAttributeCheck: { }
-UseSayWithTimeInMigrationsCheck: { }
+UseSayWithTimeInMigrationsCheck: { ignored_files: ['db/migrate/.*rpush.*\.rb'] }
 UseScopeAccessCheck: { }
 UseTurboSprocketsRails3Check: { }

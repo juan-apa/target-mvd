@@ -62,6 +62,7 @@ Metrics/LineLength:
 #    - db/migrate/20161011151353_devise_create_users.rb
 #    - db/migrate/20161027190856_create_delayed_jobs.rb
 #    - db/migrate/20181102142200_create_active_storage_tables.active_storage.rb
+    - config/initializers/rpush.rb
   URISchemes:
     - http
     - https
@@ -101,4 +102,8 @@ Style/ModuleFunction:
 
 Style/ReturnNil:
   Enabled: true
+
+Style/TernaryParentheses:
+  Exclude:
+    - config/initializers/rpush.rb
 

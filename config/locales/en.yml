@@ -29,3 +29,9 @@ en:
   validation:
     errors:
       targets_limit_reached: 'you have reached the maximum number of targets'
+  messages:
+    notification:
+      target:
+        new:
+          title: "You have a new match!"
+          body: "Tap here to start chatting with your new match."

@@ -21,6 +21,7 @@
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string
 #  tokens                 :json
+#  notification_token     :string
 #
 # Indexes
 #

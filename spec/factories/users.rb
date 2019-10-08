@@ -21,6 +21,7 @@
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string
 #  tokens                 :json
+#  notification_token     :string
 #
 # Indexes
 #
@@ -40,6 +41,7 @@ FactoryBot.define do
     last_name   { Faker::Lorem.characters(number: 6) }
     gender      { User.genders.keys.sample }
     password    { Faker::Internet.password }
+    notification_token { Faker::Lorem.characters(number: 10) }
 
     after(:create) do |user, evaluator|
       user.confirm unless evaluator.unconfirmed
