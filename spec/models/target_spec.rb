@@ -34,6 +34,19 @@ describe Target do
     }
   end
 
+  describe 'creating a matching target' do
+    let!(:target_1) { create :target }
+    let!(:target_2) do
+      create :target,
+             latitude: target_1.latitude,
+             longitude: target_1.longitude
+    end
+
+    it 'sends a notification to both target\'s users' do
+      allow(NotificationService).to receive(:create_notification)
+    end
+  end
+
   describe 'validate_target_limit' do
     let!(:user) { create :user }
     let!(:targets) { create_list :target, 10, user: user }
