@@ -13,6 +13,6 @@
 #
 
 class Match < ApplicationRecord
-  belongs_to :target_1, :class_name => 'Target'
-  belongs_to :target_2, :class_name => 'Target'
+  belongs_to :target_1, class_name: 'Target'
+  belongs_to :target_2, class_name: 'Target'
 end

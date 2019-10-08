@@ -28,7 +28,7 @@ class Target < ApplicationRecord
   belongs_to :topic
   belongs_to :user
   # has_many :conversations, dependent: :destroy
-  has_one :match, dependent: :destroy
+  has_one :match
 
   delegate :notification_token, to: :user, prefix: true
 
@@ -58,7 +58,7 @@ class Target < ApplicationRecord
       NotificationService
         .create_notification([target.user_notification_token, user_notification_token])
 
-      Match.create({target_1_id: id, target_2_id: target.id})
+      Match.create!(target_1_id: id, target_2_id: target.id)
     end
   end
 end
