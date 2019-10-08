@@ -34,6 +34,104 @@ describe Target do
     }
   end
 
+  describe 'match creation/deletion' do
+    let!(:user_1) { create :user }
+    let!(:user_2) { create :user }
+    let!(:target_1) { create :target, user: user_1 }
+
+    context 'creating a matching target' do
+      it 'creates a match and a conversation' do
+        expect {
+          create :target,
+                 latitude: target_1.latitude,
+                 longitude: target_1.longitude,
+                 topic: target_1.topic,
+                 user: user_2
+        }.to change { [Target.count, Match.count, Conversation.count] }
+          .from([1, 0, 0])
+          .to([2, 1, 1])
+      end
+    end
+
+    context 'deleting a matching target' do
+      let!(:target_2) do
+        create :target,
+               latitude: target_1.latitude,
+               longitude: target_1.longitude,
+               topic: target_1.topic,
+               user: user_2
+      end
+
+      it 'deletes the target, the match and the conversation' do
+        expect {
+          target_2.destroy!
+        }.to change { [Target.count, Match.count, Conversation.count] }
+          .from([2, 1, 1])
+          .to([1, 0, 0])
+      end
+    end
+
+    context 'creating a non-matching target' do
+      it 'doesn\'t create a match and a conversation' do
+        expect {
+          create :target,
+                 latitude: target_1.latitude,
+                 longitude: target_1.longitude,
+                 user: user_2
+        }.to change { [Target.count, Match.count, Conversation.count] }
+          .from([1, 0, 0])
+          .to([2, 0, 0])
+      end
+    end
+
+    context 'deleting a target that has multiple conversations with the same person' do
+      let!(:target_2) do
+        create :target,
+               latitude: target_1.latitude,
+               longitude: target_1.longitude,
+               topic: target_1.topic,
+               user: user_2
+      end
+      let!(:target_3) do
+        create :target,
+               latitude: target_1.latitude,
+               longitude: target_1.longitude,
+               topic: target_1.topic,
+               user: user_2
+      end
+
+      it 'deletes the target and the match, but keeps the conversation' do
+        expect {
+          target_3.destroy!
+        }.to change { [Target.count, Match.count, Conversation.count] }
+          .from([3, 2, 1])
+          .to([2, 1, 1])
+      end
+    end
+
+    context 'creating a target that has already a match with the same user' do
+      let!(:target_2) do
+        create :target,
+               latitude: target_1.latitude,
+               longitude: target_1.longitude,
+               topic: target_1.topic,
+               user: user_2
+      end
+
+      it 'creates a match with the same conversation as the previous match' do
+        expect {
+          create :target,
+                 latitude: target_1.latitude,
+                 longitude: target_1.longitude,
+                 topic: target_1.topic,
+                 user: user_2
+        }.to change { [Target.count, Match.count, Conversation.count] }
+          .from([2, 1, 1])
+          .to([3, 2, 1])
+      end
+    end
+  end
+
   describe 'validate_target_limit' do
     let!(:user) { create :user }
     let!(:targets) { create_list :target, 10, user: user }

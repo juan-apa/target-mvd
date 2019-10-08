@@ -7,6 +7,10 @@ AllCops:
 Documentation:
   Enabled: false
 
+HasManyOrHasOneDependent:
+  Exclude:
+    - app/models/target.rb
+
 Layout/ClassStructure:
   Enabled: true
 

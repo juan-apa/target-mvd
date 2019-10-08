@@ -22,7 +22,7 @@ class Match < ApplicationRecord
   belongs_to :conversation
 
   before_validation :create_conversation
-  after_destroy :destroy_conversation
+  before_destroy :destroy_conversation
 
   scope :matches_with_targets, -> { joins(:target_creator, :target_compatible) }
   scope :compatible_and_same_creator,
@@ -50,7 +50,7 @@ class Match < ApplicationRecord
   end
 
   def destroy_conversation
-    matches_with_same_conversation = Matches.count(:all).where(conversation: conversation)
+    matches_with_same_conversation = Match.where(conversation_id: conversation.id).count(:all)
     conversation.destroy! unless matches_with_same_conversation > 1
   end
 end
