@@ -45,6 +45,16 @@ class User < ApplicationRecord
 
   has_many :targets, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :matches_creator,
+           foreign_key: :match_creator,
+           class_name: 'Match',
+           dependent: :destroy,
+           inverse_of: :target_creator
+  has_many :matches_compatible,
+           foreign_key: :match_compatible,
+           class_name: 'Match',
+           dependent: :destroy,
+           inverse_of: :target_compatible
 
   include DeviseTokenAuth::Concerns::User
 end

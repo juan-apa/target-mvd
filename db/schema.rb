@@ -42,12 +42,16 @@ ActiveRecord::Schema.define(version: 2019_10_03_174146) do
   create_table "matches", force: :cascade do |t|
     t.bigint "target_creator_id"
     t.bigint "target_compatible_id"
+    t.bigint "user_creator_id"
+    t.bigint "user_compatible_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "conversation_id"
     t.index ["conversation_id"], name: "index_matches_on_conversation_id"
     t.index ["target_compatible_id"], name: "index_matches_on_target_compatible_id"
     t.index ["target_creator_id"], name: "index_matches_on_target_creator_id"
+    t.index ["user_compatible_id"], name: "index_matches_on_user_compatible_id"
+    t.index ["user_creator_id"], name: "index_matches_on_user_creator_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -178,4 +182,6 @@ ActiveRecord::Schema.define(version: 2019_10_03_174146) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "matches", "targets", column: "target_compatible_id"
   add_foreign_key "matches", "targets", column: "target_creator_id"
+  add_foreign_key "matches", "users", column: "user_compatible_id"
+  add_foreign_key "matches", "users", column: "user_creator_id"
 end

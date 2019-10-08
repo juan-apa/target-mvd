@@ -20,10 +20,4 @@ class Message < ApplicationRecord
   belongs_to :user
 
   after_create :create_conversation
-
-  private
-
-  def create_conversation
-    self.conversation = Conversation.create!
-  end
 end

@@ -27,7 +27,16 @@ class Target < ApplicationRecord
 
   belongs_to :topic
   belongs_to :user
-  has_many :matches
+  has_many :matches_creators,
+           foreign_key: :target_creator_id,
+           class_name: 'Match',
+           dependent: :destroy,
+           inverse_of: :target_creator
+  has_many :matches_compatible,
+           foreign_key: :target_compatible_id,
+           class_name: 'Match',
+           dependent: :destroy,
+           inverse_of: :target_compatible
 
   delegate :notification_token, to: :user, prefix: true
 
@@ -37,7 +46,7 @@ class Target < ApplicationRecord
   validate :validate_target_limit, on: :create
 
   after_create :create_matches
-  before_destroy :delete_match
+  # before_destroy :delete_match
 
   scope :target_matches, lambda { |id|
     where(target_creator_id: id).or(Match.where(target_compatible_id: id)).pluck(:id)
@@ -46,7 +55,6 @@ class Target < ApplicationRecord
   private
 
   def validate_target_limit
-    Rails.logger.info(matches.to_json)
     return unless user.targets.size >= MAX_NUMBER_OF_TARGETS
 
     errors.add(:target, I18n.t('validation.errors.targets_limit_reached'))
@@ -63,7 +71,10 @@ class Target < ApplicationRecord
       NotificationService.create_notification(target.user_notification_token, notification)
       NotificationService.create_notification(user_notification_token, notification)
       # Create the match
-      Match.create!(target_creator: self, target_compatible: target)
+      Match.create!(target_creator: self,
+                    target_compatible: target,
+                    user_creator: user,
+                    user_compatible: target.user)
     end
   end
 
