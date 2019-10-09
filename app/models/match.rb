@@ -55,9 +55,10 @@ class Match < ApplicationRecord
   private
 
   def create_conversation
-    conversations = Match.distinct.creator_same_as_compatible(target_creator, target_compatible).where.not(conversation: nil).pluck(:conversation_id)
+    conversations = Match.distinct.creator_same_as_compatible(target_creator, target_compatible)
+                         .where.not(conversation: nil).pluck(:conversation_id)
     self.conversation_id = conversations.empty? ? Conversation.create!.id : conversations.first
-    self.save!
+    save!
   end
 
   def destroy_conversation

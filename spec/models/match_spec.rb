@@ -3,7 +3,9 @@ require 'rails_helper'
 describe Match do
   describe 'validations' do
     subject { build :match }
-    it { is_expected.to validate_uniqueness_of(:target_creator_id).scoped_to(:target_compatible_id) }
+    it do
+      is_expected.to validate_uniqueness_of(:target_creator_id).scoped_to(:target_compatible_id)
+    end
 
     context do
       let!(:user) { create :user }
