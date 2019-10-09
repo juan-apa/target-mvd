@@ -34,29 +34,19 @@ class Match < ApplicationRecord
   after_create :create_conversation
   before_destroy :destroy_conversation
 
-  scope :matches_with_targets, -> { joins(:target_creator, :target_compatible) }
-  scope :compatible_and_same_creator,
-        lambda {
-          matches_with_targets
-            .where(target_compatible: target_compatible,
-                   targets: { user_id: target_creator.user.id })
-        }
-  scope :creator_same_as_compatible,
-        lambda { |target_creator, target_compatible|
-          matches_with_targets
-            .where(target_creator: target_compatible,
-                   targets: { user_id: target_compatible.user.id })
-            .or(
-              Match.matches_with_targets.where(target_compatible: target_compatible,
-                                               targets: { user_id: target_creator.user.id })
-            )
+  scope :matches_with_user_creator_or_compatible,
+        lambda { |target|
+          where(user_creator_id: target.user.id)
+            .or(Match.distinct.where(user_compatible_id: target.user.id))
         }
 
   private
 
   def create_conversation
-    conversations = Match.distinct.creator_same_as_compatible(target_creator, target_compatible)
-                         .where.not(conversation: nil).pluck(:conversation_id)
+    conversations = Match.distinct
+                         .matches_with_user_creator_or_compatible(target_creator)
+                         .where.not(conversation: nil)
+                         .pluck(:conversation_id)
     self.conversation_id = conversations.empty? ? Conversation.create!.id : conversations.first
     save!
   end
