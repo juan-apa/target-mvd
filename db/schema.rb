@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_03_174146) do
+ActiveRecord::Schema.define(version: 2019_10_09_142324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_174146) do
     t.bigint "conversation_id"
     t.index ["conversation_id"], name: "index_matches_on_conversation_id"
     t.index ["target_compatible_id"], name: "index_matches_on_target_compatible_id"
+    t.index ["target_creator_id", "target_compatible_id"], name: "index_matches_on_target_creator_id_and_target_compatible_id", unique: true
     t.index ["target_creator_id"], name: "index_matches_on_target_creator_id"
     t.index ["user_compatible_id"], name: "index_matches_on_user_compatible_id"
     t.index ["user_creator_id"], name: "index_matches_on_user_creator_id"
@@ -57,7 +58,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_174146) do
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "conversation_id"
-    t.string "body"
+    t.text "body", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"

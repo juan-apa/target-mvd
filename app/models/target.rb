@@ -46,11 +46,6 @@ class Target < ApplicationRecord
   validate :validate_target_limit, on: :create
 
   after_create :create_matches
-  # before_destroy :delete_match
-
-  scope :target_matches, lambda { |id|
-    where(target_creator_id: id).or(Match.where(target_compatible_id: id)).pluck(:id)
-  }
 
   private
 
@@ -82,10 +77,5 @@ class Target < ApplicationRecord
     Target.within(radius, units: :meters, origin: [latitude, longitude])
           .where(topic_id: topic.id)
           .where.not(user_id: user.id)
-  end
-
-  def delete_match
-    matches = Match.where(target_creator_id: id).or(Match.where(target_compatible_id: id))
-    matches.destroy_all
   end
 end

@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  user_id         :integer
 #  conversation_id :integer
-#  body            :string
+#  body            :text             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -16,8 +16,8 @@
 #
 
 class Message < ApplicationRecord
+  validates :body, presence: true
+
   belongs_to :conversation
   belongs_to :user
-
-  after_create :create_conversation
 end
