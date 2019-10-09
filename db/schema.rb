@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_132453) do
+ActiveRecord::Schema.define(version: 2019_10_09_142324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,35 @@ ActiveRecord::Schema.define(version: 2019_10_02_132453) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "conversations", force: :cascade do |t|
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.bigint "target_creator_id"
+    t.bigint "target_compatible_id"
+    t.bigint "user_creator_id"
+    t.bigint "user_compatible_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "conversation_id"
+    t.index ["conversation_id"], name: "index_matches_on_conversation_id"
+    t.index ["target_compatible_id"], name: "index_matches_on_target_compatible_id"
+    t.index ["target_creator_id", "target_compatible_id"], name: "index_matches_on_target_creator_id_and_target_compatible_id", unique: true
+    t.index ["target_creator_id"], name: "index_matches_on_target_creator_id"
+    t.index ["user_compatible_id"], name: "index_matches_on_user_compatible_id"
+    t.index ["user_creator_id"], name: "index_matches_on_user_creator_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "conversation_id"
+    t.text "body", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "rpush_apps", force: :cascade do |t|
@@ -152,4 +181,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_132453) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "matches", "targets", column: "target_compatible_id"
+  add_foreign_key "matches", "targets", column: "target_creator_id"
+  add_foreign_key "matches", "users", column: "user_compatible_id"
+  add_foreign_key "matches", "users", column: "user_creator_id"
 end

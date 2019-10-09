@@ -29,6 +29,7 @@ en:
   validation:
     errors:
       targets_limit_reached: 'you have reached the maximum number of targets'
+      match_with_same_users: 'a match cannot be created with the same user'
   messages:
     notification:
       target:

@@ -27,6 +27,16 @@ class Target < ApplicationRecord
 
   belongs_to :topic
   belongs_to :user
+  has_many :matches_creators,
+           foreign_key: :target_creator_id,
+           class_name: 'Match',
+           dependent: :destroy,
+           inverse_of: :target_creator
+  has_many :matches_compatible,
+           foreign_key: :target_compatible_id,
+           class_name: 'Match',
+           dependent: :destroy,
+           inverse_of: :target_compatible
 
   delegate :notification_token, to: :user, prefix: true
 
@@ -53,8 +63,14 @@ class Target < ApplicationRecord
 
   def create_matches
     Target.matching_targets(self).each do |target|
+      # Send the notifications
       NotificationService
         .create_notification([target.user_notification_token, user_notification_token])
+      # Create the match
+      Match.create!(target_creator: self,
+                    target_compatible: target,
+                    user_creator: user,
+                    user_compatible: target.user)
     end
   end
 end
