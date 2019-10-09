@@ -51,7 +51,7 @@ describe Target do
           .from([1, 0, 0])
           .to([2, 1, 1])
       end
-      
+
       it 'sends a notification to both target\'s users' do
         allow(NotificationService).to receive(:create_notification)
       end
