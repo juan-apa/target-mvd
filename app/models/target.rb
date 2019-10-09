@@ -47,6 +47,12 @@ class Target < ApplicationRecord
 
   after_create :create_matches
 
+  scope :matching_targets, lambda { |target|
+    within(target.radius, units: :meters, origin: [target.latitude, target.longitude])
+      .where(topic_id: target.topic.id)
+      .where.not(user_id: target.user.id)
+  }
+
   private
 
   def validate_target_limit
@@ -56,26 +62,15 @@ class Target < ApplicationRecord
   end
 
   def create_matches
-    notification = {
-      title: I18n.t('messages.notification.target.new.title'),
-      body: I18n.t('messages.notification.target.new.body')
-    }
-
-    matching_targets.each do |target|
+    Target.matching_targets(self).each do |target|
       # Send the notifications
-      NotificationService.create_notification(target.user_notification_token, notification)
-      NotificationService.create_notification(user_notification_token, notification)
+      NotificationService
+        .create_notification([target.user_notification_token, user_notification_token])
       # Create the match
       Match.create!(target_creator: self,
                     target_compatible: target,
                     user_creator: user,
                     user_compatible: target.user)
     end
-  end
-
-  def matching_targets
-    Target.within(radius, units: :meters, origin: [latitude, longitude])
-          .where(topic_id: topic.id)
-          .where.not(user_id: user.id)
   end
 end
