@@ -12,9 +12,11 @@ describe 'GET /api/v1/matches/:id', type: :request do
            topic_id: target_1.topic.id,
            user: user_2
   end
+  subject { get api_v1_match_path(match_id), headers: headers, as: :json }
 
   context 'with signed-out user' do
-    subject { get api_v1_match_path(target_2.matches_creators.last), as: :json }
+    let!(:headers) { {} }
+    let!(:match_id) { target_2.matches_creators.last }
 
     it 'returns unauthorized' do
       subject
@@ -29,10 +31,10 @@ describe 'GET /api/v1/matches/:id', type: :request do
   end
 
   context 'with signed-in user' do
-    let(:headers) { auth_headers(user_2) }
+    let!(:headers) { auth_headers(user_2) }
 
     context 'with invalid match id' do
-      subject { get api_v1_match_path('invalid_match_id!'), headers: headers, as: :json }
+      let!(:match_id) { 'invalid_match_id!' }
 
       it 'returns a not found status' do
         subject
@@ -46,7 +48,7 @@ describe 'GET /api/v1/matches/:id', type: :request do
     end
 
     context 'with valid match id' do
-      subject { get api_v1_match_path(target_2.matches_creators.last), headers: headers, as: :json }
+      let!(:match_id) { target_2.matches_creators.last }
 
       it 'returns a success status' do
         subject
