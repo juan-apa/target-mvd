@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[index show], format: 'json'
       resources :topics, only: %i[index show], format: 'json'
       resources :targets, only: %i[index show create destroy]
+      resources :matches, only: %i[index show]
       get :status, to: 'api#status'
     end
   end
