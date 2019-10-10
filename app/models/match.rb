@@ -35,16 +35,16 @@ class Match < ApplicationRecord
   before_destroy :destroy_conversation
 
   scope :matches_with_user_creator_or_compatible,
-        lambda { |target|
-          where(user_creator_id: target.user.id)
-            .or(Match.distinct.where(user_compatible_id: target.user.id))
+        lambda { |user|
+          where(user_creator_id: user.id)
+            .or(Match.distinct.where(user_compatible_id: user.id))
         }
 
   private
 
   def create_conversation
     conversations = Match.distinct
-                         .matches_with_user_creator_or_compatible(target_creator)
+                         .matches_with_user_creator_or_compatible(target_creator.user)
                          .where.not(conversation: nil)
                          .pluck(:conversation_id)
     self.conversation_id = conversations.empty? ? Conversation.create!.id : conversations.first
