@@ -1,6 +1,8 @@
 module Api
   module V1
     class MatchesController < ApiController
+      helper_method :match
+
       def index
         @matches = Match.user_matches(current_user)
       end
