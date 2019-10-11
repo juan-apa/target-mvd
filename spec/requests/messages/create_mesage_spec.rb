@@ -66,6 +66,10 @@ describe 'POST api/v1/conversations/:conversation_id/messages', type: :request d
         }
         expect(json).to include_json(expected_response)
       end
+
+      it 'sends a notification to the other user' do
+        allow(NotificationService).to receive(:new_message_notification)
+      end
     end
 
     context 'with incorrect params' do

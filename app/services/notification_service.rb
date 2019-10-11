@@ -25,4 +25,14 @@ module NotificationService
     # }
     # n.save!
   end
+
+  def new_message_notification(device_token)
+    notification = {
+      title: I18n.t('messages.notification.message.new.title'),
+      body: I18n.t('messages.notification.message.new.body')
+    }
+    msg = 'notification created for notification_token: ' + device_token + 'notification: ' +
+          notification.to_s
+    Rails.logger.info(msg)
+  end
 end

@@ -45,6 +45,14 @@ class Match < ApplicationRecord
       .or(Match.where(user_compatible_id: user.id))
   }
 
+  def send_message_notification(user)
+    if user_creator.id == user.id
+      NotificationService.new_message_notification(user_compatible.notification_token)
+    else
+      NotificationService.new_message_notification(user_creator.notification_token)
+    end
+  end
+
   private
 
   def create_conversation

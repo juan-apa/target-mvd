@@ -20,4 +20,12 @@ class Message < ApplicationRecord
 
   belongs_to :conversation
   belongs_to :user
+
+  after_create :send_notification
+
+  private
+
+  def send_notification
+    conversation.matches.first.send_message_notification(user)
+  end
 end
