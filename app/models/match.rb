@@ -40,6 +40,11 @@ class Match < ApplicationRecord
             .or(Match.distinct.where(user_compatible_id: user.id))
         }
 
+  scope :user_matches, lambda { |user|
+    where(user_creator_id: user.id)
+      .or(Match.where(user_compatible_id: user.id))
+  }
+
   private
 
   def create_conversation
