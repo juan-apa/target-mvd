@@ -57,8 +57,4 @@ class User < ApplicationRecord
            inverse_of: :target_compatible
 
   include DeviseTokenAuth::Concerns::User
-
-  def matches
-    matches_creators + matches_compatibles
-  end
 end

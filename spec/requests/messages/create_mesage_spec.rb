@@ -12,7 +12,7 @@ describe 'POST api/v1/conversations/:conversation_id/messages', type: :request d
            topic_id: target_1.topic.id,
            user: user_2
   end
-  let!(:conversation_id) { target_2.matches_creators[0].conversation.id }
+  let!(:conversation_id) { target_2.matches_creators.first.conversation.id }
   let(:headers) { {} }
   let!(:message) { build :message, conversation_id: conversation_id }
 
@@ -54,7 +54,7 @@ describe 'POST api/v1/conversations/:conversation_id/messages', type: :request d
         expect(response).to have_http_status(:success)
       end
 
-      it 'returns the target' do
+      it 'returns the message' do
         subject
         json = parsed_response
         expected_response = {
