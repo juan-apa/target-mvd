@@ -43,7 +43,13 @@ describe Match do
 
   describe 'other_user_unread_messages' do
     let!(:match) { create :match }
-    let!(:user_creator_messages) { create_list :message, 5, read: false, user: match.user_creator, conversation: match.conversation }
+    let!(:user_creator_messages) do
+      create_list :message,
+                  5,
+                  read: false,
+                  user: match.user_creator,
+                  conversation: match.conversation
+    end
 
     it 'returns 0 for the user who sent the messages' do
       expect(match.opposite_user_unread_messages_count(match.user_creator)).to eql(0)

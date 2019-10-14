@@ -18,7 +18,7 @@
 
 class Message < ApplicationRecord
   validates :body, presence: true
-  validates :read, null: false
+  validates :read, inclusion: [true, false]
 
   belongs_to :conversation
   belongs_to :user
