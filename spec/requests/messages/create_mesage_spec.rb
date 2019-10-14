@@ -71,12 +71,6 @@ describe 'POST api/v1/conversations/:conversation_id/messages', type: :request d
     context 'with incorrect params' do
       context 'with non existant conversation id' do
         let!(:conversation_id) { 'invalid_conversation_id!' }
-        subject do
-          post api_v1_conversation_messages_path('invalid_conversation_id!'),
-               params: message,
-               headers: headers,
-               as: :json
-        end
 
         it 'returns not found' do
           subject
