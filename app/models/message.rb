@@ -8,6 +8,7 @@
 #  body            :text             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  read            :boolean
 #
 # Indexes
 #
@@ -17,6 +18,7 @@
 
 class Message < ApplicationRecord
   validates :body, presence: true
+  validates :read, null: false
 
   belongs_to :conversation
   belongs_to :user

@@ -67,10 +67,11 @@ Metrics/LineLength:
 #    - db/migrate/20161027190856_create_delayed_jobs.rb
 #    - db/migrate/20181102142200_create_active_storage_tables.active_storage.rb
     - config/initializers/rpush.rb
-    - app/models/match.rb
+#    - app/models/match.rb
   URISchemes:
     - http
     - https
+  IgnoredPatterns: ['\A#']
 
 Metrics/ParameterLists:
   Max: 5

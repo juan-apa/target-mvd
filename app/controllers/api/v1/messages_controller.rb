@@ -20,7 +20,7 @@ module Api
       end
 
       def create_params
-        params.require(:message).permit(:body).merge(user: current_user)
+        params.require(:message).permit(:body).merge(user: current_user, read: false)
       end
     end
   end
