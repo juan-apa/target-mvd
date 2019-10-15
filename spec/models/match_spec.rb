@@ -60,4 +60,36 @@ describe Match do
         .to eq(user_creator_messages.length)
     end
   end
+
+  describe 'mark_other_user_message_read!' do
+    let!(:match) { create :match }
+    let!(:user_creator_messages) do
+      create_list :message,
+                  5,
+                  read: false,
+                  user: match.user_creator,
+                  conversation: match.conversation
+    end
+    let!(:user_compatible_messages) do
+      create_list :message,
+                  5,
+                  read: false,
+                  user: match.user_compatible,
+                  conversation: match.conversation
+    end
+    let!(:start) { user_creator_messages.map(&:read) }
+    let!(:finish) { start.map(&:!) }
+
+    it 'changes the messages read status from false to true' do
+      expect {
+        match.opposite_user_mark_messages_as_read!(match.user_compatible)
+      }.to change { match.user_creator.messages.pluck('read') }.from(start).to(finish)
+    end
+
+    it 'doesn\'t change the other user messages read status from false to true' do
+      expect {
+        match.opposite_user_mark_messages_as_read!(match.user_compatible)
+      }.not_to change { match.user_compatible.messages.pluck('read') }
+    end
+  end
 end

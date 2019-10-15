@@ -45,7 +45,8 @@ class Match < ApplicationRecord
       .or(Match.where(user_compatible_id: user.id))
   }
 
-  delegate :opposite_user_unread_messages_count, to: :conversation
+  delegate :opposite_user_unread_messages_count, :opposite_user_mark_messages_as_read!,
+           to: :conversation
 
   def send_message_notification(user)
     if user_creator.id == user.id
@@ -75,9 +76,5 @@ class Match < ApplicationRecord
     return unless user_creator_id == user_compatible_id
 
     errors.add(:target, I18n.t('validation.errors.match_with_same_users'))
-  end
-
-  def mark_other_user_message_read(user)
-    opposite_user_mark_messages_as_read(user)
   end
 end

@@ -15,8 +15,8 @@ class Conversation < ApplicationRecord
     messages.where(read: false).where.not(user_id: user.id).count
   end
 
-  def opposite_user_mark_messages_as_read(user)
-    messages.where.not(user_id: user.id).update(read: true)
+  def opposite_user_mark_messages_as_read!(user)
+    messages.where.not(user_id: user.id).update_all(read: true)
   end
 
   def ordered_messages
