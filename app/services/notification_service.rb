@@ -7,8 +7,8 @@ module NotificationService
       body: I18n.t('messages.notification.target.new.body')
     }
     device_tokens.each do |device_token|
-      msg = 'notification created for notification_token: ' + device_token + 'notification: ' +
-            notification.to_s
+      msg = `notification created for notification_token: #{device_token}
+            notification: #{notification}`
       Rails.logger.info(msg)
     end
 
