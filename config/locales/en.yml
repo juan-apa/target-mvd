@@ -32,6 +32,10 @@ en:
       match_with_same_users: 'a match cannot be created with the same user'
   messages:
     notification:
+      message:
+        new:
+          title: "You have a new message!"
+          body: "Tap here to see the message."
       target:
         new:
           title: "You have a new match!"
