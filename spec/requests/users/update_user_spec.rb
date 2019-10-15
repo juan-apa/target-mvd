@@ -47,7 +47,7 @@ describe 'PATCH /api/v1/users/', type: :request do
         it 'returns the updated user' do
           update_registration
           res = parsed_response
-          expect(res).to include_json(data: user_param)
+          expect(res).to include_json(user: user_param)
         end
 
         it 'changes the values' do
@@ -57,6 +57,26 @@ describe 'PATCH /api/v1/users/', type: :request do
           }.to change { [user.first_name, user.last_name, user.gender] }
             .from([user.first_name, user.last_name, user.gender])
             .to([new_user_attr.first_name, new_user_attr.last_name, new_user_attr.gender])
+        end
+      end
+
+      context 'with avatar field' do
+        let!(:header_param) { auth_headers(user).merge(accept: 'application/json') }
+        let!(:avatar_img) { fixture_file_upload('spec/fixtures/test_image.png', 'image/png') }
+        let(:user_id) { -1 }
+        subject(:update_registration) do
+          patch user_registration_path,
+                params: { user: { avatar: avatar_img } },
+                headers: header_param
+        end
+
+        it 'returns a success code' do
+          subject
+          expect(response).to have_http_status(200)
+        end
+
+        it 'changes the user\'s avatar' do
+          expect { subject }.to change { url_for(User.find(user.id).avatar) }
         end
       end
 

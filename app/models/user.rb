@@ -43,6 +43,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  has_one_attached :avatar
   has_many :targets, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :matches_creator,
