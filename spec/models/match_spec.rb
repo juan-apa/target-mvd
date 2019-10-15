@@ -82,13 +82,13 @@ describe Match do
 
     it 'changes the messages read status from false to true' do
       expect {
-        match.opposite_user_mark_messages_as_read!(match.user_compatible)
+        match.opposite_user_mark_messages_as_read(match.user_compatible)
       }.to change { match.user_creator.messages.pluck('read') }.from(start).to(finish)
     end
 
     it 'doesn\'t change the other user messages read status from false to true' do
       expect {
-        match.opposite_user_mark_messages_as_read!(match.user_compatible)
+        match.opposite_user_mark_messages_as_read(match.user_compatible)
       }.not_to change { match.user_compatible.messages.pluck('read') }
     end
   end
