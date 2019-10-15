@@ -8,7 +8,7 @@ module Api
       end
 
       def index
-        @messages = user_conversation_match.conversation.paginated_messages(params[:page])
+        @messages = user_conversation_match.conversation.ordered_messages.page(params[:page])
       end
 
       private

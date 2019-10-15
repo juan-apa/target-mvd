@@ -6,10 +6,12 @@
 #
 
 class Conversation < ApplicationRecord
+  paginates_per 20
+
   has_many :matches, dependent: :nullify
   has_many :messages, dependent: :destroy
 
-  def paginated_messages(page)
-    messages.order(created_at: :desc).page(page).per(20)
+  def ordered_messages
+    messages.order(created_at: :desc)
   end
 end

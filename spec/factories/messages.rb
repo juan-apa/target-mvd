@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :message do
-    body { Faker::Lorem.words(number: 10).join(' ') }
+    body { Faker::Lorem.sentence(word_count: 10) }
     user
     conversation
   end
