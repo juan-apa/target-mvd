@@ -8,7 +8,7 @@
 #  body            :text             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  read            :boolean
+#  read            :boolean          default(FALSE), not null
 #
 # Indexes
 #
