@@ -16,18 +16,12 @@
 #  index_messages_on_user_id          (user_id)
 #
 
-class Message < ApplicationRecord
-  validates :body, presence: true
-  validates :read, inclusion: [true, false]
+require 'rails_helper'
 
-  belongs_to :conversation
-  belongs_to :user
-
-  after_create :send_notification
-
-  private
-
-  def send_notification
-    conversation.matches.first.send_message_notification(user)
+describe Message do
+  describe 'validations' do
+    subject { build :message }
+    it { is_expected.to validate_presence_of(:body) }
+    it { is_expected.to validate_inclusion_of(:read).in_array([true, false]) }
   end
 end

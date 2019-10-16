@@ -32,6 +32,12 @@ describe 'GET /api/v1/matches', type: :request do
   context 'with signed-in user' do
     let(:headers) { auth_headers(user_2) }
     subject { get api_v1_matches_path, headers: headers, as: :json }
+    let!(:messages) do
+      create_list :message,
+                  3,
+                  user_id: target_1.matches_compatible.first.user_compatible.id,
+                  conversation_id: target_1.matches_compatible.first.conversation.id
+    end
 
     it 'returns a success status' do
       subject
@@ -45,7 +51,9 @@ describe 'GET /api/v1/matches', type: :request do
           target_creator_id: target.id,
           target_compatible_id: target_1.id,
           user_creator_id: user_2.id,
-          user_compatible_id: user_1.id
+          user_compatible_id: user_1.id,
+          last_message: messages.last.body,
+          unread_messages: messages.length
         }
       end
       expect(parsed_response).to include_json(matches: matches_arr)

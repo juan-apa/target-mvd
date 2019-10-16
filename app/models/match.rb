@@ -45,6 +45,9 @@ class Match < ApplicationRecord
       .or(Match.where(user_compatible_id: user.id))
   }
 
+  delegate :opposite_user_unread_messages_count, :opposite_user_mark_messages_as_read,
+           to: :conversation
+
   def send_message_notification(user)
     if user_creator.id == user.id
       NotificationService.new_message_notification(user_compatible.notification_token)
