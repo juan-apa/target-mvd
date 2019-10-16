@@ -63,7 +63,6 @@ describe 'PATCH /api/v1/users/', type: :request do
       context 'with avatar field' do
         let!(:header_param) { auth_headers(user).merge(accept: 'application/json') }
         let!(:avatar_img) { fixture_file_upload('spec/fixtures/test_image.png', 'image/png') }
-        let(:user_id) { -1 }
         subject(:update_registration) do
           patch user_registration_path,
                 params: { user: { avatar: avatar_img } },

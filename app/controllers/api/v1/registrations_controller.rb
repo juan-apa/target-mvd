@@ -6,7 +6,7 @@ module Api
       skip_before_action :check_json_request, only: :update
 
       def update
-        super()
+        super
       end
 
       private
