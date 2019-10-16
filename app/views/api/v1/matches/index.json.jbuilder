@@ -1,1 +1,1 @@
-json.matches @matches, partial: 'info', as: :match
+json.matches @matches, partial: 'conversation', as: :match
