@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'POST api/v1/conversations/:conversation_id/messages', type: :request do
-  let!(:user_1)   { create :user }
+  let!(:user_1) { create :user }
   let!(:user_2) { create :user }
   let!(:target_1) { create :target, user: user_1 }
   let!(:target_2) do

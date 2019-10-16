@@ -7,6 +7,10 @@ module Api
         @message = user_conversation_match.conversation.messages.create!(create_params)
       end
 
+      def index
+        @messages = user_conversation_match.conversation.ordered_messages.page(params[:page])
+      end
+
       private
 
       def user_conversation_match

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       resources :topics, only: %i[index show], format: 'json'
       resources :targets, only: %i[index show create destroy]
       resources :conversations, only: [] do
-        resources :messages, only: %i[create]
+        resources :messages, only: %i[index create]
       end
       resources :matches, only: %i[index show]
       get :status, to: 'api#status'
