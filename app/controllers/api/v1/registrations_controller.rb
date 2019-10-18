@@ -5,10 +5,6 @@ module Api
       include Api::Concerns::ActAsApiRequest
       skip_before_action :check_json_request, only: :update
 
-      def update
-        super
-      end
-
       private
 
       def render_create_success
