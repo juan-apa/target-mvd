@@ -4,6 +4,8 @@ ActiveAdmin.register Target do
 
   scope :all, default: true
 
+  filter :topic
+
   index do
     column('Target', sortable: :id) { |target| link_to "##{target.id} ", admin_target_path(target) }
     column('Title', :title)
