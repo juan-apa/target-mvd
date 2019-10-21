@@ -10,9 +10,7 @@ ActiveAdmin.register Target do
     column('Target', sortable: :id) { |target| link_to "##{target.id} ", admin_target_path(target) }
     column('Title', :title)
     column('User', :user)
-    # {|target| link_to "##{target.user.id} ", admin_user_path(target.user) }
     column('Topic', :topic)
-    # {|target| link_to "##{target.topic.title} ", admin_topic_path(target.topic) }
     column('Location') { |target| "#{target.latitude},#{target.longitude}" }
     column('Date', :created_at)
   end
