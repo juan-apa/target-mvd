@@ -11,7 +11,6 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'v1' do
-      # resources :abouts, only: %i[:index :show], format: 'json'
       get '/about', to: 'abouts#index'
       resources :users, only: %i[index show], format: 'json'
       resources :topics, only: %i[index show], format: 'json'
