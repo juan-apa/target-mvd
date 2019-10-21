@@ -2,3 +2,4 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+About.create!(content: 'This is an example text for the abouts section.')
