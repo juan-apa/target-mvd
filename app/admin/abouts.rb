@@ -4,7 +4,7 @@ ActiveAdmin.register About do
   scope :all, default: true
 
   index do
-    column('Content', :content)
+    column(:content)
     actions
   end
 
