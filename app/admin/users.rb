@@ -10,7 +10,15 @@ ActiveAdmin.register User do
     column('First Name', :first_name)
     column('Last Name', :last_name)
     column('Gender', :gender)
-    column('Avatar', :avatar)
+    column 'Avatar' do |user|
+      div do
+        if user.avatar.attached?
+          span link_to('avatar', polymorphic_url(user.avatar))
+        else
+          I18n.t('admin.messages.no_avatar_attached')
+        end
+      end
+    end
     column('Created At', :created_at)
     column('Updated At', :updated_at)
     column('Confirmed At', :confirmed_at)
