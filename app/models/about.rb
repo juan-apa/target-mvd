@@ -3,11 +3,11 @@
 # Table name: abouts
 #
 #  id         :integer          not null, primary key
-#  about      :text             not null
+#  content    :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 class About < ApplicationRecord
-  validates :about, presence: true
+  validates :content, presence: true
 end

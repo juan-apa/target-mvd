@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AboutController < ApiController
+    class AboutsController < ApiController
       skip_before_action :authenticate_user!
       helper_method :about
 
