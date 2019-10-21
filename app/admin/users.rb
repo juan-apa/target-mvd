@@ -1,4 +1,6 @@
 ActiveAdmin.register User do
+  decorate_with UserDecorator
+
   menu priority: 2
   actions :index, :show
 
@@ -10,7 +12,7 @@ ActiveAdmin.register User do
     column('First Name', :first_name)
     column('Last Name', :last_name)
     column('Gender', :gender)
-    column('Avatar', :avatar)
+    column('Avatar', &:avatar_link)
     column('Created At', :created_at)
     column('Updated At', :updated_at)
     column('Confirmed At', :confirmed_at)
