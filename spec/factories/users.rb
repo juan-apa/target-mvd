@@ -42,6 +42,7 @@ FactoryBot.define do
     gender      { User.genders.keys.sample }
     password    { Faker::Internet.password }
     notification_token { Faker::Lorem.characters(number: 10) }
+    avatar { Rack::Test::UploadedFile.new('spec/fixtures/test_image.png', 'image/png') }
 
     after(:create) do |user, evaluator|
       user.confirm unless evaluator.unconfirmed

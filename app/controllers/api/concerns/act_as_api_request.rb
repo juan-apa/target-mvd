@@ -15,6 +15,13 @@ module Api
         render json: { error: I18n.t('api.errors.invalid_content_type') }, status: :not_acceptable
       end
 
+      def check_form_or_json_request
+        return if request_content_type&.match?(/x-www-form-urlencoded/) ||
+                  request_content_type&.match?(/json/)
+
+        render json: { error: I18n.t('api.errors.invalid_content_type') }, status: :not_acceptable
+      end
+
       def skip_session_storage
         # Devise stores the cookie by default, so in api requests, it is disabled
         # http://stackoverflow.com/a/12205114/2394842
