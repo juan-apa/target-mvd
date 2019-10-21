@@ -38,17 +38,14 @@ describe 'POST api/v1/users/', type: :request do
 
     it 'returns the user' do
       post user_registration_path, params: params, as: :json
-
-      json = parsed_response
-      expect(json[:status]).to eq('success')
-      expect(json[:data]).to include_json(
-        id: user.id,
-        email: user.email,
-        uid: email,
-        provider: 'email',
-        first_name: user.first_name,
-        last_name: user.last_name,
-        gender: user.gender
+      expect(parsed_response).to include_json(
+        user: {
+          id: user.id,
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          gender: user.gender
+        }
       )
     end
 
