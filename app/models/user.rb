@@ -58,4 +58,12 @@ class User < ApplicationRecord
            inverse_of: :target_compatible
 
   include DeviseTokenAuth::Concerns::User
+
+  def self.find_or_create_sign_in(provider, user_data)
+    where(provider: provider, uid: user_data[:id]).first_or_create! do |user|
+      user.password = Devise.friendly_token[0, 20]
+      user.assign_attributes user_data.except('id')
+      user.confirm
+    end
+  end
 end
