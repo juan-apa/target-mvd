@@ -25,7 +25,9 @@ ActiveAdmin.register Target do
         t.column('Target Creator', :target_creator) do |match|
           link_to "##{match.target_creator.id}", admin_target_path(match.target_creator)
         end
-        t.column('Conversation') { |match| "##{match.conversation.id}" }
+        t.column('Conversation') do |match|
+          link_to "##{match.conversation.id}", admin_conversation_path(match.conversation.id)
+        end
       end
     end
   end
