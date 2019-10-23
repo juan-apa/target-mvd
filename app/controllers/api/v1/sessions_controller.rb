@@ -6,7 +6,8 @@ module Api
       protect_from_forgery with: :null_session
 
       def facebook_sign_in
-        user_data = FacebookService.get_user_data facebook_sign_in_params
+        user_data = FacebookService.new(facebook_sign_in_params).get_user_data
+        byebug
         @resource = User.find_or_create_sign_in('facebook', user_data)
         sign_in(:user, @resource)
         new_auth_header = @resource.create_new_auth_token
