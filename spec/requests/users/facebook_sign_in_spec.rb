@@ -44,7 +44,7 @@ describe 'POST api/v1/users/', type: :request do
     end
   end
 
-  context 'with existant user' do
+  context 'with existent user' do
     let!(:user) do
       create :user,
              email: service_response[:email],
