@@ -1,13 +1,10 @@
-require 'koala'
-
 module Api
   module V1
     class SessionsController < DeviseTokenAuth::SessionsController
       protect_from_forgery with: :null_session
 
       def facebook_sign_in
-        user_data = FacebookService.new(facebook_sign_in_params).get_user_data
-        byebug
+        user_data = FacebookService.new(facebook_sign_in_params).user_data
         @resource = User.find_or_create_sign_in('facebook', user_data)
         sign_in(:user, @resource)
         new_auth_header = @resource.create_new_auth_token
