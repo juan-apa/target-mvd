@@ -34,7 +34,7 @@ describe 'GET /api/v1/matches/:id', type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'sends an email to the admins' do
+    it 'sends an email to admin_user' do
       allow(ContactMailer).to receive(:send_question)
     end
   end
