@@ -12,13 +12,13 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       get '/about', to: 'abouts#index'
-      post '/contact', to: 'contact#send_question'
       resources :users, only: %i[index show], format: 'json'
       resources :topics, only: %i[index show], format: 'json'
       resources :targets, only: %i[index show create destroy]
       resources :conversations, only: [] do
         resources :messages, only: %i[index create]
       end
+      resources :contacts, only: :create, format: 'json'
       resources :matches, only: %i[index show]
       get :status, to: 'api#status'
     end

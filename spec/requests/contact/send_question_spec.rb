@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe 'GET /api/v1/matches/:id', type: :request do
-  subject { post api_v1_contact_path, params: params, headers: headers, as: :json }
+describe 'POST /api/v1/contacts', type: :request do
+  subject { post api_v1_contacts_path, params: params, headers: headers, as: :json }
   let!(:params) do
     {
       subject: 'Email subject',
@@ -36,6 +36,10 @@ describe 'GET /api/v1/matches/:id', type: :request do
 
     it 'sends an email to admin_user' do
       allow(ContactMailer).to receive(:send_question)
+    end
+
+    it 'increases the amount of sent emails by 1' do
+      expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(1)
     end
   end
 end
