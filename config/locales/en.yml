@@ -16,18 +16,30 @@
 #
 # This would use the information in config/locales/es.yml.
 #
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  api:
+    errors:
+      server: 'An error ocurred'
+      not_found: "Couldn't find the record"
+      missing_param: 'A required param is missing'
+      invalid_content_type: 'Invalid content type header'
+  validation:
+    errors:
+      targets_limit_reached: 'you have reached the maximum number of targets'
+      match_with_same_users: 'a match cannot be created with the same user'
+  admin:
+    messages:
+      no_avatar_attached: 'Not Available'
+  messages:
+    notification:
+      message:
+        new:
+          title: "You have a new message!"
+          body: "Tap here to see the message."
+      target:
+        new:
+          title: "You have a new match!"
+          body: "Tap here to start chatting with your new match."
