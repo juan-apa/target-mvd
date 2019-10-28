@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :conversations, only: [] do
         resources :messages, only: %i[index create]
       end
+      resources :contacts, only: :create, format: 'json'
       resources :matches, only: %i[index show]
       get :status, to: 'api#status'
     end
