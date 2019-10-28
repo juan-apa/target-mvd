@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+  devise_scope :user do
+    post 'api/v1/users/facebook/sign_in', action: :facebook_sign_in, controller: 'api/v1/sessions'
+  end
+
   namespace 'api' do
     namespace 'v1' do
       get '/about', to: 'abouts#index'
