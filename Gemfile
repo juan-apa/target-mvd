@@ -52,7 +52,7 @@ end
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'annotate', '~> 2.6.5'
-  gem 'better_errors', '~> 2.1.1'
+  gem 'better_errors', '~> 2.8.0'
   gem 'brakeman', '~> 4.4.0'
   gem 'letter_opener', '~> 1.4.1'
 
